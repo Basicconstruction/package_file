@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class TextCollector {
     /**
@@ -25,14 +26,11 @@ public class TextCollector {
     private ArrayList<String> data = new ArrayList<>();
     public TextCollector(File file) {
         try{
-            FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
-            String s = null;
-            while((s=br.readLine())!=null){
-                sb.append(s).append("\n");
+            Scanner sc = new Scanner(file);
+            sc.useDelimiter("\n");
+            while(sc.hasNext()){
+                sb.append(sc.next()).append("\n");
             }
-            br.close();
-            fr.close();
             data = new TextIterator(sb).getAsArrayList();
         } catch (IOException e) {
             e.printStackTrace();
@@ -40,14 +38,11 @@ public class TextCollector {
     }
     public TextCollector(String path){
         try{
-            FileReader fr = new FileReader(path);
-            BufferedReader br = new BufferedReader(fr);
-            String s = null;
-            while((s=br.readLine())!=null){
-                sb.append(s).append("\n");
+            Scanner sc = new Scanner(new File(path));
+            sc.useDelimiter("\n");
+            while(sc.hasNext()){
+                sb.append(sc.next()).append("\n");
             }
-            br.close();
-            fr.close();
             data = new TextIterator(sb).getAsArrayList();
         } catch (IOException e) {
             e.printStackTrace();
