@@ -1,9 +1,6 @@
 package text_picker;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -29,7 +26,10 @@ public class TextCollector {
             Scanner sc = new Scanner(file);
             sc.useDelimiter("\n");
             while(sc.hasNext()){
-                sb.append(sc.next()).append("\n");
+                String s = sc.next();
+                if((!s.equals("\r")&&!s.equals(""))){
+                    sb.append(s.replace("\r","")).append("\n");
+                }
             }
             data = new TextIterator(sb).getAsArrayList();
         } catch (IOException e) {
@@ -47,6 +47,15 @@ public class TextCollector {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static String getAsText(File file){
+        String text = null;
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+            text = new String(fileInputStream.readAllBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return text;
     }
     public TextCollector(FileReader fr){
         try{
